@@ -15,11 +15,34 @@ jobs:
     steps:
       - name: 拉取源码
         uses: actions/checkout@v4
-      - name: 构建Astro项目
-        uses: withastro/action@v3
+
+      # 固定pnpm版本，消除版本冲突
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.1.3
+
+      - name: 配置Node 20
+        uses: actions/setup-node@v4
         with:
           node-version: 20
-          package-manager: pnpm@latest
+          cache: 'pnpm'
+
+      # 国内镜像加速依赖下载
+      - name: 切换淘宝镜像
+        run: pnpm config set registry https://registry.npmmirror.com
+
+      # 安装依赖并打包
+      - name: 构建静态站点
+        run: |
+          pnpm install
+          pnpm build
+
+      # 上传打包产物
+      - name: Upload build artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
 
   deploy:
     needs: build
@@ -28,6 +51,6 @@ jobs:
       name: github-pages
       url: ${{ steps.deploy.outputs.page_url }}
     steps:
-      - name: 发布静态站点
+      - name: 部署到Pages
         id: deploy
         uses: actions/deploy-pages@v4
