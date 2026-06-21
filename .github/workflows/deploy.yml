@@ -16,30 +16,27 @@ jobs:
       - name: 拉取源码
         uses: actions/checkout@v4
 
-      # 固定pnpm版本，消除版本冲突
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
           version: 11.1.3
 
-      - name: 配置Node 20
+      # 升级 Node 到 22，满足 pnpm11 最低版本要求
+      - name: 配置Node 22
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: 'pnpm'
 
-      # 国内镜像加速依赖下载
       - name: 切换淘宝镜像
         run: pnpm config set registry https://registry.npmmirror.com
 
-      # 安装依赖并打包
       - name: 构建静态站点
         run: |
           pnpm install
           pnpm build
 
-      # 上传打包产物
-      - name: Upload build artifact
+      - name: 上传打包产物
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
