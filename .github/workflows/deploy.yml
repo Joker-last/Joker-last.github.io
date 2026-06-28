@@ -3,6 +3,14 @@ name: Deploy Mizuki Blog to Pages
 on:
   push:
     branches: [ main ]
+  # 允许手动触发
+  workflow_dispatch:
+
+# 关键权限配置，解决403无写入权限问题
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
   build-and-deploy: 
@@ -12,28 +20,31 @@ jobs:
       - name: Checkout source code
         uses: actions/checkout@v4
 
-      # 2. 安装 pnpm
+      # 2. 安装pnpm
       - name: Install pnpm
         uses: pnpm/action-setup@v4
 
-      # 3. 配置 Node.js 22，缓存pnpm依赖
+      # 3. Node环境与依赖缓存
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: "pnpm"
 
-      # 4. 安装项目依赖（只执行一次）
+      # 4. 安装依赖
       - name: Install dependencies
         run: pnpm install
 
-      # 5. 打包博客，Astro输出dist文件夹
+      # 5. 打包博客，输出dist文件夹
       - name: Build blog
         run: pnpm run build
 
-      # 6. 部署到 GitHub Pages，publish_dir 改为 ./dist
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
+      # 6. 上传打包产物dist
+      - name: Upload pages artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
+          path: ./dist
+
+      # 7. 官方部署，自动拥有推送gh-pages权限
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
