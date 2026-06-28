@@ -62,3 +62,6 @@ src/data/bilibili-data.json
 public/
 dist/
 node_modules/
+public/
+dist/
+.astro/
