@@ -79,13 +79,13 @@ const style = Astro.props.style;
 				(widget as HTMLElement).style.display = "none";
 			});
 			// 保存关闭状态到localStorage
-			localStorage.setItem("announcementClosed", "true");
+			//localStorage.setItem("announcementClosed", "true");
 		}
 	}
 
 	// 页面加载时检查是否已关闭
 	document.addEventListener("DOMContentLoaded", function () {
-		const widgetLayouts = document.querySelectorAll(
+		/*const widgetLayouts = document.querySelectorAll(
 			'widget-layout[data-id="announcement"]',
 		);
 
@@ -96,7 +96,7 @@ const style = Astro.props.style;
 			widgetLayouts.forEach((widget) => {
 				(widget as HTMLElement).style.display = "none";
 			});
-		}
+		}*/
 	});
 
 	// 使公告栏函数全局可用

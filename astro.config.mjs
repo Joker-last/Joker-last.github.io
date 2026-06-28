@@ -34,6 +34,12 @@ import { remarkMermaid } from "./src/plugins/remark-mermaid.js";
 
 // https://astro.build/config
 export default defineConfig({
+	// 新增国际化配置
+	i18n: {
+		locales: ['zh-CN'], // 仅简体中文，不需要英文就删掉en
+		defaultLocale: 'zh-CN', // 默认首页中文
+		prefixDefaultLocale: false // 首页URL不带 /zh-cn/
+	},
 	site: "https://Joker-last.github.io",
 	base: "/",
 	trailingSlash: "always",
