@@ -60,6 +60,4 @@ src/data/bilibili-data.json
 *.cmo3
 *.vtube.json
 node_modules/
-public/
-dist/
 .astro/
