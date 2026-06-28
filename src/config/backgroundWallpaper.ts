@@ -1,22 +1,19 @@
 import type { FullscreenWallpaperConfig } from "../types/config";
 
+// 批量导入图片
+const bgList = [
+  new URL('../assets/desktop-banner/bg1.png', import.meta.url).href,
+  new URL('../assets/desktop-banner/bg2.png', import.meta.url).href,
+  new URL('../assets/desktop-banner/bg3.png', import.meta.url).href,
+  new URL('../assets/desktop-banner/bg4.png', import.meta.url).href,
+  new URL('../assets/desktop-banner/bg5.png', import.meta.url).href,
+];
+
 export const fullscreenWallpaperConfig: FullscreenWallpaperConfig = {
 	enable: true,
 	src: {
-		desktop: [
-			"/assets/desktop-banner/bg1.png",
-			"/assets/desktop-banner/bg2.png",
-			"/assets/desktop-banner/bg3.png",
-			"/assets/desktop-banner/bg4.png",
-			"/assets/desktop-banner/bg5.png",
-		],
-		mobile: [
-			"/assets/desktop-banner/bg1.png",
-			"/assets/desktop-banner/bg2.png",
-			"/assets/desktop-banner/bg3.png",
-			"/assets/desktop-banner/bg4.png",
-			"/assets/desktop-banner/bg5.png",
-		],
+		desktop: bgList,
+		mobile: bgList,
 	},
 	position: "center",
 	carousel: {
