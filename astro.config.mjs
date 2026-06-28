@@ -42,7 +42,7 @@ export default defineConfig({
 	},
 	site: "https://Joker-last.github.io",
 	base: "/",
-	trailingSlash: "always",
+	trailingSlash: "ignore",
 
 	output: "static",
 
